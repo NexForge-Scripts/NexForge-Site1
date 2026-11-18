@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bots Discord NexForge — NexForge Scripts</title>
+<meta property="og:title" content="Bots Discord NexForge — NexForge Scripts">
+<meta property="og:description" content="Modération avancée, musique, jeux et plus pour gérer votre serveur. Des bots Discord légers, rapides et disponibles 24h/24.">
+<meta property="og:image" content="https://nexforgescripts.com/logo-yatay.png">
+<meta property="og:url" content="https://nexforgescripts.com/projects/fr/discord-botlari.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NexForge Scripts">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bots Discord NexForge — NexForge Scripts">
+<meta name="twitter:description" content="Modération avancée, musique, jeux et plus pour gérer votre serveur. Des bots Discord légers, rapides et disponibles 24h/24.">
+<meta name="twitter:image" content="https://nexforgescripts.com/logo-yatay.png">
+<link rel="icon" type="image/png" href="../../logo.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  :root {
+    --bg: #0a0a0f; --bg-sidebar: #060810; --bg-card: rgba(255,255,255,0.03);
+    --bg-hover: rgba(255,255,255,0.06); --accent: #00f5d4; --accent-dim: #00c4b0;
+    --purple: #7b2ff7; --text: #e8e6e3; --text-muted: #8a8a8a;
+    --text-dim: #4a5270; --border: rgba(255,255,255,0.06); --danger: #ef4444; --success: #22c55e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+  ::selection { background: rgba(0,245,212,0.25); }
+  .bg-glow { position: fixed; top: -300px; left: -200px; width: 800px; height: 800px; background: radial-gradient(circle, rgba(0,245,212,0.06) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+  .bg-glow-2 { position: fixed; bottom: -200px; right: -100px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(123,47,247,0.05) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+  .logo { display: flex; align-items: center; }
+  .logo img { display: block; height: 28px; width: auto; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+  .page-title { text-align: center; padding: 30px 0 50px; }
+  .page-title h1 { font-size: 36px; font-weight: 900; letter-spacing: -1px; margin-bottom: 12px; }
+  .page-title h1 span { background: linear-gradient(135deg, var(--accent), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .page-title p { color: var(--text-muted); font-size: 15px; max-width: 500px; margin: 0 auto; }
+  .hero-feature { background: linear-gradient(135deg, rgba(0,245,212,0.06), rgba(123,47,247,0.04), rgba(10,10,15,0.96)); border-radius: 24px; padding: 48px 40px; border: 1px solid var(--border); margin-bottom: 50px; text-align: center; }
+  .hero-feature h2 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+  .hero-feature p { color: var(--text-muted); font-size: 14px; max-width: 600px; margin: 0 auto 24px; }
+  .feature-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; background: linear-gradient(135deg, rgba(0,245,212,0.12), rgba(123,47,247,0.10)); color: var(--accent); border: 1px solid rgba(0,245,212,0.10); margin-bottom: 16px; }
+  .section-title { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin: 0 0 24px; }
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 50px; }
+  .feature-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.25s; }
+  .feature-card:hover { border-color: rgba(0,245,212,0.10); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+  .feature-card .icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 14px; background: linear-gradient(135deg, rgba(0,245,212,0.10), rgba(123,47,247,0.08)); }
+  .feature-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .feature-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .compare-table { width: 100%; border-collapse: collapse; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 50px; }
+  .compare-table th { background: rgba(0,245,212,0.06); padding: 14px 18px; text-align: left; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); }
+  .compare-table th:first-child { width: 40%; }
+  .compare-table td { padding: 12px 18px; font-size: 13px; border-top: 1px solid var(--border); color: var(--text-muted); }
+  .compare-table tr:hover td { background: var(--bg-hover); }
+  .compare-table td:first-child { font-weight: 600; color: var(--text); }
+  .check { color: var(--success); }
+  .cross { color: var(--danger); }
+  .back-top { position: fixed; bottom: 32px; right: 32px; width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(0,245,212,0.15), rgba(123,47,247,0.12)); border: 1px solid var(--border); color: var(--accent); font-size: 18px; display: flex; align-items: center; justify-content: center; text-decoration: none; z-index: 999; opacity: 0; transform: translateY(20px); transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1); pointer-events: none; }
+  .back-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .back-top:hover { background: linear-gradient(135deg, rgba(0,245,212,0.25), rgba(123,47,247,0.20)); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+  footer { text-align: center; padding: 40px 0; border-top: 1px solid var(--border); margin-top: 20px; color: var(--text-dim); font-size: 13px; }
+  .hamburger { display: none; background: none; border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; cursor: pointer; color: var(--text-dim); font-size: 18px; line-height: 1; transition: all 0.2s; }
+  .hamburger:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-switcher { display: flex; gap: 4px; margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--border); }
+  .lang-switcher a { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; font-size: 11px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+  .lang-switcher a.active { background: var(--accent); color: #060810; }
+  .lang-switcher a:not(.active) { color: var(--text-dim); border: 1px solid var(--border); }
+  .lang-switcher a:not(.active):hover { border-color: var(--accent); color: var(--accent); }
+  .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border-radius: 12px; font-size: 14px; font-weight: 600; text-decoration: none; background: linear-gradient(135deg, var(--accent), var(--purple)); color: #060810; transition: all 0.25s; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,245,212,0.2); }
+  .project-pills { display: flex; gap: 6px; align-items: center; margin-left: 8px; padding-left: 8px; border-left: 1px solid var(--border); }
+  .project-pills .pill { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 16px; font-size: 11px; font-weight: 600; text-decoration: none; transition: all 0.2s; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text-dim); }
+  .project-pills .pill:hover { border-color: var(--accent); color: var(--accent); }
+  .project-pills .pill.active { background: rgba(0,245,212,0.08); border-color: var(--accent); color: var(--accent); }
+  @media (max-width: 768px) {
+    nav { position: relative; }
+    .hamburger { display: block; }
+    nav .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: rgba(10,10,15,0.97); backdrop-filter: blur(16px); padding: 16px 20px; border-bottom: 1px solid var(--border); gap: 14px; z-index: 100; }
+    nav .nav-links.open { display: flex; }
+    .lang-switcher { margin-left: 0; padding-left: 0; border-left: none; }
+    nav .nav-links .lang-switcher { padding-top: 8px; border-top: 1px solid var(--border); }
+    .project-pills { margin-left: 0; padding-left: 0; border-left: none; }
+    nav .nav-links .project-pills { padding-top: 8px; border-top: 1px solid var(--border); }
+  }
+  @media (max-width: 640px) {
+    .page-title h1 { font-size: 26px; }
+    nav { gap: 10px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .hero-feature { padding: 28px 20px; }
+    .page-title p { font-size: 13px; }
+    .back-top { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 16px; }
+  }
+  @media (max-width: 400px) {
+    .container { padding: 0 16px; }
+    .hero-feature { padding: 20px 16px; }
+    .feature-card { padding: 18px; }
+  }
+  body { animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+
+<div class="container">
+
+  <nav>
+    <div class="logo"><a href="../../fr/index.html"><img src="../../logo.png" alt="NexForge"></a></div>
+    <div class="nav-links">
+      <a href="../../fr/index.html">Accueil</a>
+      <a href="../../fr/projeler.html" class="active">Projets</a>
+      <div class="project-pills">
+        <a href="../../fr/projeler.html" class="pill">📥 Media Downloader</a>
+        <a href="discord-botlari.html" class="pill active">🤖 Bots Discord</a>
+        <a href="web-projeleri.html" class="pill">🌐 Projets Web</a>
+      </div>
+      <div class="lang-switcher">
+        <a href="../discord-botlari.html">TR</a>
+        <a href="../en/discord-botlari.html">EN</a>
+        <a href="discord-botlari.html" class="active">FR</a>
+      </div>
+    </div>
+    <button class="hamburger" aria-label="Menu">☰</button>
+  </nav>
+
+  <div class="page-title reveal">
+    <h1><span>Bots Discord NexForge</span></h1>
+    <p>Tout ce dont vous avez besoin pour gérer votre serveur — modération, musique, jeux et plus encore.</p>
+  </div>
+
+  <div class="hero-feature reveal">
+    <div class="feature-badge">🤖 Nouveau</div>
+    <h2>Des bots puissants pour votre serveur</h2>
+    <p>Les bots Discord NexForge sont une collection modulaire, rapide et fiable conçue pour faire passer votre serveur au niveau supérieur. Entièrement gratuits, open source et fonctionnant 24h/24.</p>
+    <a href="../../fr/index.html#contact" class="btn-primary">📩 Contactez-nous</a>
+  </div>
+
+  <div class="reveal">
+    <div class="section-title">Fonctionnalités</div>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card reveal">
+      <div class="icon">🛡️</div>
+      <h3>Modération avancée</h3>
+      <p>Filtres automatiques, protection anti-spam, système d'avertissement et commandes de modération personnalisées. Protégez votre serveur contre les utilisateurs malveillants.</p>
+    </div>
+    <div class="feature-card reveal reveal-delay-1">
+      <div class="icon">🎵</div>
+      <h3>Lecteur musique</h3>
+      <p>Streaming audio haute qualité avec support YouTube, SoundCloud et Spotify. Listes de lecture, gestion de file d'attente et contrôle du volume.</p>
+    </div>
+    <div class="feature-card reveal reveal-delay-2">
+      <div class="icon">🎮</div>
+      <h3>Jeux & Fun</h3>
+      <p>Mini-jeux, concours et commandes interactives pour animer votre serveur. Aidez vos membres à passer un bon moment.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="icon">📊</div>
+      <h3>Statistiques & Logs</h3>
+      <p>Statistiques détaillées du serveur, logs de messages, suivi des membres et rapports. Gardez le pouls de votre serveur à tout moment.</p>
+    </div>
+    <div class="feature-card reveal reveal-delay-1">
+      <div class="icon">⚙️</div>
+      <h3>Entièrement personnalisable</h3>
+      <p>Définissez votre propre préfixe, gérez les rôles, créez des tâches automatiques et des commandes personnalisées. Le bot est entièrement sous votre contrôle.</p>
+    </div>
+    <div class="feature-card reveal reveal-delay-2">
+      <div class="icon">📦</div>
+      <h3>Structure modulaire</h3>
+      <p>Choisissez les modules dont vous avez besoin, désactivez les fonctionnalités inutiles. Léger et optimisé — chargez seulement ce que vous utilisez.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="icon">🔄</div>
+      <h3>Disponible 24h/24</h3>
+      <p>Une infrastructure optimisée maintient vos bots en fonctionnement continu. Les mises à jour sont automatiques, aucune action requise de votre part.</p>
+    </div>
+    <div class="feature-card reveal reveal-delay-1">
+      <div class="icon">🌍</div>
+      <h3>Multilingue</h3>
+      <p>Support turc, anglais et français. Les commandes et messages du bot s'adaptent automatiquement à la langue de votre serveur.</p>
+    </div>
+    <div class="feature-card reveal reveal-delay-2">
+      <div class="icon">☕</div>
+      <h3>Entièrement gratuit</h3>
+      <p>Open source, sans publicité et gratuit. Nous acceptons les dons volontaires pour continuer à nous améliorer.</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="section-title">Comparaison</div>
+  </div>
+
+  <div style="overflow-x:auto;border-radius:16px;"><table class="compare-table reveal">
+    <thead>
+      <tr>
+        <th>Fonctionnalité</th>
+        <th>Bots NexForge</th>
+        <th>Autres Bots</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Modération</td>
+        <td class="check">✔ Filtrage avancé + automatique</td>
+        <td class="cross">✘ Limité ou payant</td>
+      </tr>
+      <tr>
+        <td>Musique</td>
+        <td class="check">✔ Haute qualité, multi-plateforme</td>
+        <td class="cross">✘ Généralement mono-plateforme</td>
+      </tr>
+      <tr>
+        <td>Personnalisation</td>
+        <td class="check">✔ Entièrement ouvert, structure modulaire</td>
+        <td class="cross">✘ Code fermé, fonctionnalités fixes</td>
+      </tr>
+      <tr>
+        <td>Performance</td>
+        <td class="check">✔ Léger, optimisé</td>
+        <td class="cross">✘ Souvent lourd et lent</td>
+      </tr>
+      <tr>
+        <td>Langues</td>
+        <td class="check">✔ TR / EN / FR</td>
+        <td class="cross">✘ Généralement une seule langue (EN)</td>
+      </tr>
+      <tr>
+        <td>Fonctionnement continu</td>
+        <td class="check">✔ Infrastructure automatisée 24h/24</td>
+        <td class="cross">✘ Interruptions fréquentes</td>
+      </tr>
+      <tr>
+        <td>Prix</td>
+        <td class="check">✔ Entièrement gratuit</td>
+        <td class="cross">✘ Fonctionnalités premium payantes</td>
+      </tr>
+      <tr>
+        <td>Open Source</td>
+        <td class="check">✔ Oui</td>
+        <td class="cross">✘ Généralement fermé</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <footer>
+    <p>© 2026 Eray Yashar — NexForge Scripts — <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer" style="color:var(--text-dim);text-decoration:underline;text-underline-offset:3px;">Licence MIT</a> · <a href="../../fr/gizlilik-politikasi.html" style="color:var(--text-dim);text-decoration:underline;text-underline-offset:3px;">Politique de confidentialité</a></p>
+  </footer>
+
+</div>
+
+<a href="#" class="back-top" id="backTop">↑</a>
+
+<style>
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  body { animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => { backTop.classList.toggle('visible', window.scrollY > 600); });
+document.querySelectorAll('.hamburger').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const nav = this.closest('nav');
+    if (!nav) return;
+    const links = nav.querySelector('.nav-links');
+    if (links) links.classList.toggle('open');
+  });
+});
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('nav')) {
+    document.querySelectorAll('.nav-links.open').forEach(el => el.classList.remove('open'));
+  }
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', function() {
+    const links = this.closest('.nav-links');
+    if (links) links.classList.remove('open');
+  });
+});
+</script>
+
+</body>
+</html>

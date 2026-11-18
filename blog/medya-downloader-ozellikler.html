@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medya Downloader ile Neler Mümkün? — NexForge Scripts</title>
+<meta property="og:title" content="Medya Downloader ile Neler Mümkün?">
+<meta property="og:description" content="Web'den kontrol, format/kalite seçimi, toplu indirme, otomatik FFmpeg kurulumu ve daha fazlası. NexForge Media Downloader özelliklerini keşfedin.">
+<meta property="og:image" content="https://nexforgescripts.com/logo-yatay.png">
+<meta property="og:url" content="https://nexforgescripts.com/blog/medya-downloader-ozellikler.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NexForge Scripts">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Medya Downloader ile Neler Mümkün?">
+<meta name="twitter:description" content="Web'den kontrol, format/kalite seçimi, toplu indirme, otomatik FFmpeg kurulumu ve daha fazlası. NexForge Media Downloader özelliklerini keşfedin.">
+<meta name="twitter:image" content="https://nexforgescripts.com/logo-yatay.png">
+<link rel="icon" type="image/png" href="../logo.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  :root {
+    --bg: #0a0a0f;
+    --bg-card: rgba(255,255,255,0.03);
+    --accent: #00f5d4;
+    --purple: #7b2ff7;
+    --text: #e8e6e3;
+    --text-muted: #8a8a8a;
+    --text-dim: #4a5270;
+    --border: rgba(255,255,255,0.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 48px;
+  }
+  .logo img { display: block; height: 28px; width: auto; }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  .nav-links a {
+    color: var(--text-dim); text-decoration: none;
+    font-size: 13px; font-weight: 500; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--text-muted); text-decoration: none;
+    font-size: 13px; font-weight: 500; margin-bottom: 24px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .post-header { margin-bottom: 32px; }
+  .post-tag {
+    display: inline-block;
+    padding: 4px 12px; border-radius: 6px;
+    font-size: 11px; font-weight: 600;
+    background: rgba(0,245,212,0.08); color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .post-header h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 10px; }
+  .post-meta { color: var(--text-dim); font-size: 13px; }
+  .post-content p { color: var(--text-muted); font-size: 15px; margin-bottom: 18px; }
+  .post-content h2 { font-size: 20px; font-weight: 700; margin: 32px 0 14px; }
+  .post-content ul { padding-left: 20px; margin-bottom: 18px; }
+  .post-content li { color: var(--text-muted); font-size: 15px; margin-bottom: 6px; }
+  .post-content strong { color: var(--text); }
+  .post-content a { color: var(--accent); }
+  footer {
+    text-align: center; padding: 40px 0;
+    border-top: 1px solid var(--border); margin-top: 48px;
+    color: var(--text-dim); font-size: 13px;
+  }
+  /* ---- Hamburger ---- */
+  .hamburger {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 18px;
+    line-height: 1;
+    transition: all 0.2s;
+  }
+  .hamburger:hover { border-color: var(--accent); color: var(--accent); }
+
+  .lang-switcher { display: flex; gap: 4px; margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--border); }
+  .lang-switcher a { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; font-size: 11px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+  .lang-switcher a.active { background: var(--accent); color: #060810; }
+  .lang-switcher a:not(.active) { color: var(--text-dim); border: 1px solid var(--border); }
+  .lang-switcher a:not(.active):hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 768px) {
+    nav { position: relative; }
+    .hamburger { display: block; }
+    nav .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      flex-direction: column;
+      background: rgba(10,10,15,0.97);
+      backdrop-filter: blur(16px);
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      gap: 14px;
+      z-index: 100;
+    }
+    nav .nav-links.open { display: flex; }
+  }
+  @media (max-width: 640px) {
+    .post-header h1 { font-size: 22px; }
+    nav { gap: 10px; }
+  }
+  @media (max-width: 400px) {
+    .container { padding: 0 16px; }
+  }
+  /* page transition */
+  body { animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+<div class="container">
+  <nav>
+    <div class="logo"><a href="../index.html"><img src="../logo.png" alt="NexForge"></a></div>
+    <div class="nav-links">
+      <a href="../index.html">Ana Sayfa</a>
+      <a href="../projeler.html">Projeler</a>
+      <a href="../#blog">Blog</a>
+      <div class="lang-switcher">
+        <a href="/blog/medya-downloader-ozellikler.html" class="active">TR</a>
+        <a href="/en/blog/medya-downloader-ozellikler.html">EN</a>
+        <a href="/fr/blog/medya-downloader-ozellikler.html">FR</a>
+      </div>
+    </div>
+    <button class="hamburger" aria-label="Menü">☰</button>
+  </nav>
+
+  <a href="../#blog" class="back-link">← Blog</a>
+
+  <article>
+    <div class="post-header">
+      <span class="post-tag">rehber</span>
+      <h1>Medya Downloader ile Neler Mümkün?</h1>
+      <div class="post-meta">16 Haziran 2026</div>
+    </div>
+    <div class="post-content">
+      <p><strong>NexForge Media Downloader</strong> sadece bir indirme aracı değil — medya yönetimi için kapsamlı bir çözüm. İşte bilmeniz gereken tüm özellikler:</p>
+
+      <h2>🌐 Web'den Tam Kontrol</h2>
+      <p>Uygulama açıkken aynı ağdaki herhangi bir cihazdan tarayıcı ile bağlanın. Telefon, tablet veya başka bir bilgisayar — fark etmez. QR kod ile saniyede bağlantı kurun.</p>
+
+      <h2>🎯 Format & Kalite Seçimi</h2>
+      <p>MP4, MP3, MKV, WEBM gibi formatlar arasından seçim yapın. YouTube'da 4K video, SoundCloud'da FLAC müzik, Instagram'da en yüksek kalite. İstediğiniz gibi.</p>
+
+      <h2>📋 Toplu İndirme</h2>
+      <p>Birden fazla linki kuyruğa ekleyin, sırayla insin. YouTube oynatma listeleri ve kanal toplu indirme de destekleniyor.</p>
+
+      <h2>🛑 İptal Desteği</h2>
+      <p>Yanlış link mi yapıştırdınız? Tek tıkla iptal. Üstelik web arayüzünden de indirmeyi durdurabilirsiniz.</p>
+
+      <h2>🎨 Modern ve Kullanıcı Dostu</h2>
+      <p>PySide6 ile inşa edilmiş koyu temalı arayüz, frameless pencere tasarımı, özel başlık çubuğu. Göz yormayan, akıcı bir deneyim.</p>
+
+      <h2>🔧 Otomatik FFmpeg Yönetimi</h2>
+      <p>FFmpeg nedir bilmenize gerek yok. Uygulama ilk açılışta en güncel sürümü indirir ve hazır hale getirir. Sıfır kurulum eforu.</p>
+
+      <p>Tüm bu özellikler <strong>ücretsiz ve açık kaynak</strong>. Daha fazlası için GitHub reposunu ziyaret edin.</p>
+    </div>
+  </article>
+
+  <footer>
+    <p>© 2026 Eray Yashar — NexForge Scripts — <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer" style="color:var(--text-dim);text-decoration:underline;text-underline-offset:3px;">MIT Lisansı</a> ile açık kaynak. · <a href="../gizlilik-politikasi.html" style="color:var(--text-dim);text-decoration:underline;text-underline-offset:3px;">Gizlilik Politikası</a></p>
+  </footer>
+</div>
+<script>
+// Hamburger toggle
+document.querySelectorAll('.hamburger').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const nav = this.closest('nav');
+    if (!nav) return;
+    const links = nav.querySelector('.nav-links');
+    if (links) links.classList.toggle('open');
+  });
+});
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('nav')) {
+    document.querySelectorAll('.nav-links.open').forEach(el => el.classList.remove('open'));
+  }
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', function() {
+    const links = this.closest('.nav-links');
+    if (links) links.classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>

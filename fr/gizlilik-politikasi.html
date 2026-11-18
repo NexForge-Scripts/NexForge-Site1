@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Politique de confidentialité — NexForge Scripts</title>
+<meta property="og:title" content="Politique de confidentialité — NexForge Scripts">
+<meta property="og:description" content="Politique de confidentialité de NexForge Scripts. Quelles données sont collectées, comment elles sont utilisées et vos droits.">
+<meta property="og:image" content="https://nexforgescripts.com/logo-yatay.png">
+<meta property="og:url" content="https://nexforgescripts.com/fr/gizlilik-politikasi.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NexForge Scripts">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../logo.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  :root {
+    --bg: #0a0a0f;
+    --bg-card: rgba(255,255,255,0.03);
+    --accent: #00f5d4;
+    --purple: #7b2ff7;
+    --text: #e8e6e3;
+    --text-muted: #8a8a8a;
+    --text-dim: #4a5270;
+    --border: rgba(255,255,255,0.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 48px;
+  }
+  .logo img { display: block; height: 28px; width: auto; }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  .nav-links a {
+    color: var(--text-dim); text-decoration: none;
+    font-size: 13px; font-weight: 500; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--text-muted); text-decoration: none;
+    font-size: 13px; font-weight: 500; margin-bottom: 24px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .page-header { margin-bottom: 32px; }
+  .page-header h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 10px; }
+  .page-header .date { color: var(--text-dim); font-size: 13px; }
+  .content h2 { font-size: 18px; font-weight: 700; margin: 32px 0 14px; color: var(--accent); }
+  .content p { color: var(--text-muted); font-size: 15px; margin-bottom: 16px; }
+  .content ul { padding-left: 20px; margin-bottom: 16px; }
+  .content li { color: var(--text-muted); font-size: 15px; margin-bottom: 6px; }
+  .content strong { color: var(--text); }
+  .content a { color: var(--accent); }
+  footer {
+    text-align: center; padding: 40px 0;
+    border-top: 1px solid var(--border); margin-top: 48px;
+    color: var(--text-dim); font-size: 13px;
+  }
+  footer a { color: var(--text-dim); text-decoration: underline; text-underline-offset: 3px; }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 18px;
+    line-height: 1;
+    transition: all 0.2s;
+  }
+  .hamburger:hover { border-color: var(--accent); color: var(--accent); }
+
+  .lang-switcher { display: flex; gap: 4px; margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--border); }
+  .lang-switcher a { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; font-size: 11px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+  .lang-switcher a.active { background: var(--accent); color: #060810; }
+  .lang-switcher a:not(.active) { color: var(--text-dim); border: 1px solid var(--border); }
+  .lang-switcher a:not(.active):hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 768px) {
+    nav { position: relative; }
+    .hamburger { display: block; }
+    nav .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      flex-direction: column;
+      background: rgba(10,10,15,0.97);
+      backdrop-filter: blur(16px);
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      gap: 14px;
+      z-index: 100;
+    }
+    nav .nav-links.open { display: flex; }
+    .lang-switcher { margin-left: 0; padding-left: 0; border-left: none; }
+    nav .nav-links .lang-switcher { padding-top: 8px; border-top: 1px solid var(--border); }
+  }
+  @media (max-width: 640px) {
+    .page-header h1 { font-size: 22px; }
+    nav { gap: 10px; }
+  }
+  @media (max-width: 400px) {
+    .container { padding: 0 16px; }
+  }
+  /* page transition */
+  body { animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+<div class="container">
+  <nav>
+    <div class="logo"><a href="index.html"><img src="../logo.png" alt="NexForge"></a></div>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="projeler.html">Projets</a>
+      <a href="https://discord.gg/qhJHDjtBba">Discord</a>
+      <div class="lang-switcher">
+        <a href="../gizlilik-politikasi.html">TR</a>
+        <a href="../en/gizlilik-politikasi.html">EN</a>
+        <a href="gizlilik-politikasi.html" class="active">FR</a>
+      </div>
+    </div>
+    <button class="hamburger" aria-label="Menu">☰</button>
+  </nav>
+
+  <a href="index.html" class="back-link">← Accueil</a>
+
+  <div class="page-header">
+    <h1>Politique de confidentialité</h1>
+    <div class="date">Dernière mise à jour : 16 juin 2026</div>
+  </div>
+
+  <div class="content">
+    <p>Chez NexForge Scripts, nous accordons de l'importance à votre vie privée. Cette politique de confidentialité explique quelles informations sont collectées lorsque vous visitez notre site web ou utilisez notre formulaire de contact, comment elles sont utilisées et vos droits.</p>
+
+    <h2>1. Informations collectées</h2>
+    <p>Notre site web ne collecte des données personnelles que dans les situations suivantes :</p>
+    <ul>
+      <li><strong>Formulaire de contact :</strong> Lorsque vous nous envoyez votre adresse e-mail et votre message, ces informations sont utilisées uniquement pour vous répondre.</li>
+      <li><strong>Journaux serveur :</strong> Notre serveur web peut enregistrer des données techniques standard telles que l'adresse IP, le type de navigateur et les pages visitées. Ces données ne permettent pas de vous identifier personnellement.</li>
+    </ul>
+
+    <h2>2. Utilisation de vos données</h2>
+    <p>Les informations collectées sont uniquement utilisées aux fins suivantes :</p>
+    <ul>
+      <li>Répondre aux demandes soumises via le formulaire de contact</li>
+      <li>Améliorer le site web et l'expérience utilisateur</li>
+      <li>Respecter les obligations légales</li>
+    </ul>
+    <p>Votre adresse e-mail et votre message ne sont <strong>jamais partagés, vendus ou loués</strong> à des tiers.</p>
+
+    <h2>3. Stockage des données</h2>
+    <p>Les messages du formulaire de contact sont transmis via <a href="https://formspree.io" target="_blank" rel="noopener noreferrer">Formspree</a> et redirigés vers notre boîte de réception. Les messages sont conservés aussi longtemps que nécessaire à des fins de communication. Ils peuvent être supprimés sur demande.</p>
+
+    <h2>4. Cookies</h2>
+    <p>Ce site web <strong>n'utilise pas de cookies.</strong> Aucun cookie de suivi, d'analyse ou de publicité n'est présent.</p>
+
+    <h2>5. Liens tiers</h2>
+    <p>Notre site contient des liens vers des services tiers comme GitHub, Discord et Buy Me a Coffee. Ces sites ont leurs propres politiques de confidentialité, et NexForge Scripts n'est pas responsable de leurs pratiques de traitement des données.</p>
+
+    <h2>6. Sécurité des données</h2>
+    <p>Nous prenons des mesures techniques et administratives raisonnables pour protéger vos données personnelles. Notre site est servi via HTTPS et les données du formulaire de contact sont transmises de manière cryptée.</p>
+
+    <h2>7. Vos droits</h2>
+    <p>Vous disposez des droits suivants concernant vos données :</p>
+    <ul>
+      <li>Demander l'accès aux données que nous détenons sur vous</li>
+      <li>Demander la correction de données inexactes</li>
+      <li>Demander la suppression de vos données</li>
+      <li>Vous opposer au traitement de vos données</li>
+    </ul>
+    <p>Pour exercer ces droits, contactez-nous à <a href="mailto:nexforgescripts@gmail.com">nexforgescripts@gmail.com</a>.</p>
+
+    <h2>8. Contact</h2>
+    <p>Si vous avez des questions concernant cette politique de confidentialité :</p>
+    <p><strong>E-mail :</strong> <a href="mailto:nexforgescripts@gmail.com">nexforgescripts@gmail.com</a></p>
+
+    <h2>9. Modifications</h2>
+    <p>Cette politique de confidentialité peut être mise à jour si nécessaire. Les modifications prennent effet dès leur publication sur cette page.</p>
+  </div>
+
+  <footer>
+    <p>© 2026 Eray Yashar — NexForge Scripts — Open source sous <a href="https://opensource.org/licenses/MIT">licence MIT</a>. · <a href="gizlilik-politikasi.html" style="color:var(--text-dim);text-decoration:underline;text-underline-offset:3px;">Politique de confidentialité</a></p>
+  </footer>
+</div>
+<script>
+document.querySelectorAll('.hamburger').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const nav = this.closest('nav');
+    if (!nav) return;
+    const links = nav.querySelector('.nav-links');
+    if (links) links.classList.toggle('open');
+  });
+});
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('nav')) {
+    document.querySelectorAll('.nav-links.open').forEach(el => el.classList.remove('open'));
+  }
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', function() {
+    const links = this.closest('.nav-links');
+    if (links) links.classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>

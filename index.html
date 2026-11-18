@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexForge Scripts</title>
+<meta property="og:title" content="NexForge Scripts">
+<meta property="og:description" content="Kodla üret, sınırları zorla. Açık kaynak yazılım geliştirme, medya araçları ve topluluk projeleri.">
+<meta property="og:image" content="https://nexforgescripts.com/logo-yatay.png">
+<meta property="og:url" content="https://nexforgescripts.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NexForge Scripts">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NexForge Scripts">
+<meta name="twitter:description" content="Kodla üret, sınırları zorla. Açık kaynak yazılım geliştirme, medya araçları ve topluluk projeleri.">
+<meta name="twitter:image" content="https://nexforgescripts.com/logo-yatay.png">
+<link rel="icon" type="image/png" href="logo.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --bg-sidebar: #060810;
+    --bg-card: rgba(255,255,255,0.03);
+    --bg-hover: rgba(255,255,255,0.06);
+    --accent: #00f5d4;
+    --accent-dim: #00c4b0;
+    --purple: #7b2ff7;
+    --text: #e8e6e3;
+    --text-muted: #8a8a8a;
+    --text-dim: #4a5270;
+    --border: rgba(255,255,255,0.06);
+    --danger: #ef4444;
+    --success: #22c55e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  ::selection { background: rgba(0,245,212,0.25); }
+
+  /* ---- Scroll Progress Bar ---- */
+  .scroll-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--purple));
+    z-index: 1001;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* ---- Sticky Nav ---- */
+  .nav-wrapper {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 0 24px;
+    transform: translateY(-100%);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s;
+  }
+  .nav-wrapper.visible {
+    transform: translateY(0);
+  }
+  .nav-wrapper.scrolled {
+    background: rgba(10,10,15,0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-wrapper .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .nav-wrapper .logo { display: flex; align-items: center; }
+  .nav-wrapper .logo img { display: block; height: 28px; width: auto; }
+  .nav-wrapper .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-wrapper .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-wrapper .nav-links a:hover { color: var(--accent); }
+
+  .bg-glow {
+    position: fixed;
+    top: -300px; left: -200px;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(0,245,212,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-glow-2 {
+    position: fixed;
+    bottom: -200px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(123,47,247,0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---- Inline Nav (Hero area) ---- */
+  .hero-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    margin-bottom: 60px;
+  }
+  .hero-nav .logo { display: flex; align-items: center; }
+  .hero-nav .logo img { display: block; height: 32px; width: auto; }
+  .hero-nav .nav-links { display: flex; gap: 28px; align-items: center; }
+  .hero-nav .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .hero-nav .nav-links a:hover { color: var(--accent); }
+
+  /* ---- Hero Area (logo bg) ---- */
+  .hero-area {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('logo-yatay.png');
+    background-size: 80% auto;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+    opacity: 0.09;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-area .container { position: relative; z-index: 1; }
+
+  /* ---- Hero ---- */
+  .hero {
+    text-align: center;
+    padding: 40px 0 60px;
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, rgba(0,245,212,0.12), rgba(123,47,247,0.10));
+    color: var(--accent);
+    margin-bottom: 24px;
+    border: 1px solid rgba(0,245,212,0.10);
+  }
+  .hero h1 {
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 32px;
+  }
+
+  .btn-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: #060810;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,245,212,0.20);
+  }
+  .btn-secondary {
+    background: var(--bg-card);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover {
+    background: var(--bg-hover);
+    transform: translateY(-2px);
+  }
+
+  /* ---- Section ---- */
+  section { padding: 60px 0; }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .section-heading {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 32px;
+  }
+
+  /* ---- About Card ---- */
+  .about-card {
+    background: linear-gradient(135deg, rgba(0,245,212,0.06), rgba(123,47,247,0.04), rgba(10,10,15,0.96));
+    border-radius: 24px;
+    padding: 40px 36px;
+    border: 1px solid var(--border);
+  }
+  .about-card p {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.9;
+    max-width: 720px;
+  }
+  .about-card p + p { margin-top: 18px; }
+
+  /* ---- Projects ---- */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .project-card {
+    display: block;
+    background: linear-gradient(135deg, rgba(0,245,212,0.04), rgba(123,47,247,0.03), rgba(10,10,15,0.92));
+    border-radius: 20px;
+    padding: 28px;
+    border: 1px solid var(--border);
+    transition: all 0.25s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .project-card:hover {
+    border-color: rgba(0,245,212,0.20);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,245,212,0.08), 0 12px 40px rgba(0,0,0,0.4);
+  }
+  .project-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, rgba(0,245,212,0.12), rgba(123,47,247,0.10));
+  }
+  .project-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .project-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+  .project-tags { display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+  .project-tags span {
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--bg-card);
+    color: var(--text-dim);
+  }
+
+  /* ---- Blog / Posts ---- */
+  .post-list { display: flex; flex-direction: column; gap: 16px; }
+  .post-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 24px;
+    border-radius: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .post-card:hover {
+    background: var(--bg-hover);
+    border-color: rgba(0,245,212,0.10);
+  }
+  .post-date {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 600;
+    white-space: nowrap;
+    min-width: 70px;
+    padding-top: 2px;
+  }
+  .post-content h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .post-content p { font-size: 13px; color: var(--text-muted); }
+  .post-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    background: rgba(0,245,212,0.08);
+    color: var(--accent-dim);
+    margin-top: 6px;
+  }
+
+  /* ---- FAQ ---- */
+  .faq-list { display: flex; flex-direction: column; gap: 10px; }
+  .faq-item {
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    overflow: hidden;
+  }
+  .faq-q {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 22px;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+  .faq-q:hover { background: var(--bg-hover); }
+  .faq-arrow {
+    font-size: 11px;
+    color: var(--text-dim);
+    transition: transform 0.3s;
+  }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding: 0 22px;
+  }
+  .faq-item.open .faq-a {
+    max-height: 200px;
+    padding: 0 22px 18px;
+  }
+  .faq-a p {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .faq-a code {
+    background: rgba(0,245,212,0.08);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  /* ---- Contact ---- */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .contact-info-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .contact-info-card .icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(0,245,212,0.12), rgba(123,47,247,0.10));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .contact-info-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .contact-info-card p { color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+  .contact-info-card a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .contact-info-card a:hover { color: var(--accent-dim); }
+  .contact-social {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .contact-social a {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.25s;
+  }
+  .contact-social a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,245,212,0.05);
+  }
+  .contact-form-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+  }
+  .contact-form-card .form-group { margin-bottom: 18px; }
+  .contact-form-card label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .contact-form-card input,
+  .contact-form-card textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    transition: all 0.25s;
+    outline: none;
+  }
+  .contact-form-card input:focus,
+  .contact-form-card textarea:focus {
+    border-color: var(--accent);
+    background: rgba(0,245,212,0.03);
+    box-shadow: 0 0 0 3px rgba(0,245,212,0.08);
+  }
+  .contact-form-card textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  .contact-form-card input::placeholder,
+  .contact-form-card textarea::placeholder {
+    color: rgba(255,255,255,0.12);
+  }
+  .contact-form-card .btn-submit {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: #060810;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .contact-form-card .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,245,212,0.20);
+  }
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 20px;
+  }
+  .form-success.active { display: block; }
+  .form-success.active ~ .form-fields { display: none; }
+  .form-success h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .form-success p { color: var(--text-muted); font-size: 14px; }
+
+  /* ---- Support ---- */
+  .support-card {
+    text-align: center;
+    padding: 48px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(0,245,212,0.05), rgba(123,47,247,0.03));
+    border: 1px solid var(--border);
+  }
+  .support-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+  .support-card p { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
+
+  /* ---- Footer ---- */
+  footer {
+    text-align: center;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  /* ---- Back to Top ---- */
+  .back-top {
+    position: fixed;
+    bottom: 32px; right: 32px;
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(0,245,212,0.15), rgba(123,47,247,0.12));
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+  .back-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .back-top:hover {
+    background: linear-gradient(135deg, rgba(0,245,212,0.25), rgba(123,47,247,0.20));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+
+  /* ---- Scroll Animations ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ---- Hamburger ---- */
+  .hamburger {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 18px;
+    line-height: 1;
+    transition: all 0.2s;
+  }
+  .hamburger:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---- Language Switcher ---- */
+  .lang-switcher {
+    display: flex;
+    gap: 4px;
+    margin-left: 12px;
+    padding-left: 12px;
+    border-left: 1px solid var(--border);
+  }
+  .lang-switcher a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .lang-switcher a.active {
+    background: var(--accent);
+    color: #060810;
+  }
+  .lang-switcher a:not(.active) {
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+  .lang-switcher a:not(.active):hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .hamburger { display: block; }
+    .hero-nav { position: relative; }
+    .nav-wrapper .nav-inner { position: relative; }
+    .hero-nav .nav-links, .nav-wrapper .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      flex-direction: column;
+      background: rgba(10,10,15,0.97);
+      backdrop-filter: blur(16px);
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      gap: 14px;
+      z-index: 100;
+    }
+    .hero-nav .nav-links.open, .nav-wrapper .nav-links.open { display: flex; }
+    .lang-switcher { margin-left: 0; padding-left: 0; border-left: none; }
+    .hero-nav .nav-links .lang-switcher { padding-top: 8px; border-top: 1px solid var(--border); }
+    .nav-wrapper .nav-links .lang-switcher { padding-top: 8px; border-top: 1px solid var(--border); }
+  }
+  @media (max-width: 640px) {
+    .splash-bg { background-size: contain; }
+    .hero h1 { font-size: 32px; }
+    .hero-nav { gap: 10px; }
+    .hero p { font-size: 15px; }
+    .project-grid { grid-template-columns: 1fr; }
+    .post-card { flex-direction: column; gap: 8px; }
+    .about-card { padding: 24px; }
+    .section-heading { font-size: 22px; }
+    .faq-q { padding: 14px 16px; font-size: 13px; }
+    .support-card { padding: 28px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .back-top { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 16px; }
+  }
+  @media (max-width: 400px) {
+    .hero h1 { font-size: 26px; }
+    .hero-badge { font-size: 10px; padding: 4px 12px; }
+    .btn { padding: 10px 20px; font-size: 13px; }
+    .container { padding: 0 16px; }
+  }
+
+  /* ---- Splash Screen ---- */
+  .splash {
+    position: fixed; inset: 0; z-index: 999999;
+    background: #0a0a0f;
+    display: none;
+    opacity: 1;
+    transition: opacity 0.6s ease;
+  }
+  .splash.active { display: block; }
+  .splash.hidden { opacity: 0; pointer-events: none; }
+  .splash-bg {
+    position: absolute; inset: 0;
+    background-image: url('logo-yatay.png');
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.13;
+    animation: splashBreath 2.5s ease-in-out infinite;
+  }
+  @keyframes splashBreath {
+    0%, 100% { opacity: 0.10; }
+    50% { opacity: 0.18; }
+  }
+  /* page transition */
+  body { animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "NexForge Media Downloader",
+  "operatingSystem": "Windows",
+  "applicationCategory": "MultimediaApplication",
+  "description": "Modern media downloader with web remote control, format/quality selection, batch downloads, auto FFmpeg management, and multi-language support.",
+  "url": "https://nexforgescripts.com/",
+  "downloadUrl": "https://github.com/NexForge-Scripts/NexForge-Media-Downloader/releases/latest/download/NexForge.Media.Downloader.exe",
+  "releaseNotes": "https://github.com/NexForge-Scripts/NexForge-Media-Downloader/releases",
+  "screenshot": "https://nexforgescripts.com/logo-yatay.png",
+  "softwareVersion": "1.1.0",
+  "author": { "@type": "Organization", "name": "NexForge Scripts", "url": "https://nexforgescripts.com" },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TRY" }
+}
+</script>
+</head>
+<body>
+
+<div class="splash" id="splash"><div class="splash-bg"></div></div>
+
+<div class="scroll-bar" id="scrollBar"></div>
+
+<!-- Sticky Nav -->
+<div class="nav-wrapper" id="stickyNav">
+  <div class="nav-inner">
+    <div class="logo"><img src="logo.png" alt="NexForge"></div>
+    <div class="nav-links">
+      <a href="#about">Hakkında</a>
+      <a href="#projects">Çalışmalar</a>
+      <a href="#blog">Blog</a>
+      <a href="#faq">SSS</a>
+      <a href="#contact">İletişim</a>
+      <a href="#support">Destek</a>
+      <a href="projeler.html">Projeler</a>
+      <a href="https://discord.gg/qhJHDjtBba">Discord</a>
+      <div class="lang-switcher">
+        <a href="index.html" class="active">TR</a>
+        <a href="en/index.html">EN</a>
+        <a href="fr/index.html">FR</a>
+      </div>
+    </div>
+    <button class="hamburger" aria-label="Menü">☰</button>
+  </div>
+</div>
+
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+
+<!-- Hero + About area with yatay logo background -->
+<div class="hero-area">
+  <div class="hero-bg"></div>
+  <div class="container">
+
+    <!-- Hero Nav -->
+    <div class="hero-nav">
+      <div class="logo"><img src="logo.png" alt="NexForge"></div>
+      <div class="nav-links">
+        <a href="#about">Hakkında</a>
+        <a href="#projects">Çalışmalar</a>
+        <a href="#blog">Blog</a>
+        <a href="#faq">SSS</a>
+        <a href="#contact">İletişim</a>
+        <a href="#support">Destek</a>
+        <a href="projeler.html">Projeler</a>
+        <a href="https://discord.gg/qhJHDjtBba">Discord</a>
+        <div class="lang-switcher">
+          <a href="index.html" class="active">TR</a>
+          <a href="en/index.html">EN</a>
+        <a href="fr/index.html">FR</a>
+        </div>
+      </div>
+      <button class="hamburger" aria-label="Menü">☰</button>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge reveal">✦ NexForge Scripts</div>
+      <h1 class="reveal reveal-delay-1">Kodla <span>üret</span>,<br>sınırları <span>zorla</span>.</h1>
+      <p class="reveal reveal-delay-2">NexForge Scripts — yazılım geliştirme, medya araçları ve açık kaynak projeler üreten bir topluluk. Her satır kod yeni bir çözüm.</p>
+      <div class="btn-group reveal reveal-delay-3">
+        <a href="#projects" class="btn btn-primary">Projeleri İncele →</a>
+        <a href="https://github.com/NexForge-Scripts" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <div class="section-title reveal">Hakkında</div>
+      <h2 class="section-heading reveal reveal-delay-1">NexForge Scripts Nedir?</h2>
+      <div class="about-card reveal reveal-delay-2">
+        <p>🚀 <strong>NexForge Scripts</strong> — kullanıcı odaklı yazılımlar geliştiren bir açık kaynak oluşumu. Günlük hayatta karşılaştığımız sorunlara pratik, modern ve herkesin erişebileceği çözümler üretiyoruz.</p>
+        <p>🔧 Geliştirdiğimiz araçlar; medya indirme, otomasyon, Discord bot altyapıları ve web teknolojileri gibi alanlara yayılıyor. Her proje temiz kod, güçlü kullanıcı deneyimi ve özgür yazılım felsefesiyle inşa ediliyor.</p>
+        <p>🌍 NexForge olarak şeffaflığa, topluluk katkısına ve sürdürülebilir yazılıma inanıyoruz. Her satır kod yeni bir çözüm, her proje yeni bir adım.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Projects -->
+  <section id="projects">
+    <div class="section-title reveal">Projeler</div>
+    <h2 class="section-heading reveal reveal-delay-1">Öne Çıkan Çalışmalar</h2>
+    <div class="project-grid">
+      <a class="project-card reveal reveal-delay-1" href="https://github.com/NexForge-Scripts/NexForge-Media-Downloader" target="_blank" rel="noopener noreferrer">
+        <div class="project-icon">📥</div>
+        <h3>NexForge Media Downloader</h3>
+        <p>yt-dlp tabanlı, modern arayüzlü medya indirme aracı. YouTube, TikTok, Instagram ve daha fazlası. Web'den kontrol ve otomatik güncelleme desteği.</p>
+        <div class="project-tags">
+          <span>Python</span>
+          <span>PySide6</span>
+          <span>yt-dlp</span>
+          <span>Flask</span>
+        </div>
+      </a>
+
+      <a class="project-card reveal reveal-delay-2" href="projects/discord-botlari.html">
+        <div class="project-icon">🤖</div>
+        <h3>Discord Botları</h3>
+        <p>Özel komut sistemleri, medya yönetimi ve moderasyon araçları ile donatılmış Discord bot altyapıları.</p>
+        <div class="project-tags">
+          <span>discord.py</span>
+          <span>Python</span>
+        </div>
+      </a>
+
+      <a class="project-card reveal reveal-delay-3" href="projects/web-projeleri.html">
+        <div class="project-icon">🌐</div>
+        <h3>Web Projeleri</h3>
+        <p>Modern, duyarlı ve kullanıcı dostu web arayüzleri. Sade tasarım, güçlü işlevsellik.</p>
+        <div class="project-tags">
+          <span>HTML/CSS</span>
+          <span>JavaScript</span>
+          <span>Flask</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section id="blog">
+    <div class="section-title reveal">Blog</div>
+    <h2 class="section-heading reveal reveal-delay-1">Son Yazılar</h2>
+    <div class="post-list">
+
+      <a class="post-card reveal reveal-delay-1" href="blog/nexforge-media-downloader-v1-1-0.html">
+        <div class="post-date">2026</div>
+        <div class="post-content">
+          <h4>NexForge Media Downloader v1.1.0 Yayında</h4>
+          <p>FFmpeg otomatik yönetimi, yeni güncelleme arayüzü, çoklu dil desteği ve web'den kontrol ile birlikte yeni sürüm hazır. yt-dlp altyapısıyla YouTube, TikTok, Instagram ve binlerce platformdan medya indirin.</p>
+          <span class="post-tag">güncelleme</span>
+        </div>
+      </a>
+
+      <a class="post-card reveal reveal-delay-2" href="blog/discord-sunucumuz-acildi.html">
+        <div class="post-date">2026</div>
+        <div class="post-content">
+          <h4>Discord Sunucumuz Açıldı</h4>
+          <p>NexForce topluluğu artık Discord'da! Güncellemeleri takip edebilir, geri bildirim gönderebilir ve diğer kullanıcılarla fikir alışverişi yapabilirsiniz. Herkesi bekliyoruz.</p>
+          <span class="post-tag">topluluk</span>
+        </div>
+      </a>
+
+      <a class="post-card reveal reveal-delay-3" href="blog/medya-downloader-ozellikler.html">
+        <div class="post-date">2026</div>
+        <div class="post-content">
+          <h4>Medya Downloader ile Neler Mümkün?</h4>
+          <p>Web'den kontrol, format/kalite seçimi, toplu indirme, otomatik FFmpeg kurulumu ve daha fazlası. NexForge Media Downloader'ın tüm özelliklerini keşfedin.</p>
+          <span class="post-tag">rehber</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-title reveal">SSS</div>
+    <h2 class="section-heading reveal reveal-delay-1">Sık Sorulan Sorular</h2>
+    <div class="faq-list reveal reveal-delay-2">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>📥 NexForge Media Downloader nasıl indirilir?</span>
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-a">
+          <p>GitHub üzerinden <strong>NexForge-Scripts/NexForge-Media-Downloader</strong> reposuna gidip Releases bölümünden son sürümü indirebilirsiniz. Tek dosya (exe) olarak çalışır, kurulum gerektirmez.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>🌐 Web'den kontrol nasıl çalışır?</span>
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-a">
+          <p>Uygulama açıkken tarayıcıdan <code>http://localhost:8765</code> adresine girerek telefon veya başka bir cihazdan indirme işlemlerini yönetebilirsiniz. QR kod ile bağlanmak da mümkün.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>🎬 Hangi platformlar destekleniyor?</span>
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-a">
+          <p>YouTube, TikTok, Instagram, Twitter/X, Facebook, SoundCloud, Vimeo ve binlerce site. yt-dlp altyapısı sayesinde neredeyse tüm medya platformlarıyla uyumlu.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>🔧 FFmpeg gerekli mi?</span>
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-a">
+          <p>İlk çalıştırmada FFmpeg otomatik olarak indirilip kurulur. Elle uğraşmanız gerekmez — uygulama sizin yerinize halleder.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="section-title reveal">İletişim</div>
+    <h2 class="section-heading reveal reveal-delay-1">Bize Ulaşın</h2>
+    <div class="contact-grid reveal reveal-delay-2">
+      <div class="contact-info-card">
+        <div class="icon">✉️</div>
+        <h3>E-posta</h3>
+        <p>Bizimle doğrudan iletişime geçmek için e-posta gönderebilir veya aşağıdaki formu kullanabilirsiniz.</p>
+        <a href="mailto:nexforgescripts@gmail.com">nexforgescripts@gmail.com</a>
+        <div class="contact-social">
+          <a href="https://github.com/NexForge-Scripts" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://discord.gg/qhJHDjtBba" aria-label="Discord">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form-card" id="contactForm">
+        <div class="form-success" id="formSuccess">
+          <h3>✓ Mesajınız Gönderildi</h3>
+          <p>Teşekkürler! En kısa sürede dönüş yapacağız.</p>
+        </div>
+        <div class="form-fields">
+          <form id="contactFormInner">
+            <div class="form-group">
+              <label for="cf_email">E-posta Adresiniz</label>
+              <input type="email" id="cf_email" name="email" placeholder="ornek@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="cf_message">Mesajınız</label>
+              <textarea id="cf_message" name="message" placeholder="Mesajınızı yazın..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit" id="contactSubmitBtn">Gönder →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support -->
+  <section id="support">
+    <div class="section-title reveal">Destek</div>
+    <h2 class="section-heading reveal reveal-delay-1">Projeleri Destekle</h2>
+    <div class="support-card reveal reveal-delay-2">
+      <h3>☕ Bana Bir Kahve Ismarla</h3>
+      <p>Projelerimi beğeniyor ve daha fazlasını görmek istiyorsan, bir kahve ısmarlayarak destek olabilirsin. Her katkı yeni özellikler ve daha iyi yazılımlar demek.</p>
+      <a class="btn btn-primary" href="https://buymeacoffee.com/nexforge" target="_blank" rel="noopener noreferrer">☕ Buy Me a Coffee</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="reveal">
+    <p>© 2026 Eray Yashar — NexForge Scripts — <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer" style="color:var(--text-dim);text-decoration:underline;text-underline-offset:3px;">MIT Lisansı</a> ile açık kaynak. · <a href="gizlilik-politikasi.html" style="color:var(--text-dim);text-decoration:underline;text-underline-offset:3px;">Gizlilik Politikası</a></p>
+  </footer>
+
+</div>
+
+<a href="#" class="back-top" id="backTop">↑</a>
+
+<script>
+(function(){if(!sessionStorage.getItem('splashShown')){sessionStorage.setItem('splashShown','1');const s=document.getElementById('splash');s.classList.add('active');setTimeout(()=>{s.classList.add('hidden');setTimeout(()=>{s.style.display='none'},500)},1500)}})();
+
+const stickyNav = document.getElementById('stickyNav');
+const scrollBar = document.getElementById('scrollBar');
+const heroSection = document.querySelector('.hero');
+let heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+
+function updateNav() {
+  const scrollY = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+  scrollBar.style.width = pct + '%';
+
+  if (scrollY > heroBottom - 80) {
+    stickyNav.classList.add('visible');
+    if (scrollY > heroBottom + 60) {
+      stickyNav.classList.add('scrolled');
+    } else {
+      stickyNav.classList.remove('scrolled');
+    }
+  } else {
+    stickyNav.classList.remove('visible', 'scrolled');
+  }
+}
+
+window.addEventListener('scroll', updateNav);
+window.addEventListener('resize', () => {
+  heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+});
+
+// Back to top
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('visible', window.scrollY > 600);
+});
+
+// Hamburger toggle
+document.querySelectorAll('.hamburger').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const nav = this.closest('.hero-nav, .nav-inner, nav');
+    if (!nav) return;
+    const links = nav.querySelector('.nav-links');
+    if (links) links.classList.toggle('open');
+  });
+});
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.hero-nav, .nav-inner, nav')) {
+    document.querySelectorAll('.nav-links.open').forEach(el => el.classList.remove('open'));
+  }
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', function() {
+    const links = this.closest('.nav-links');
+    if (links) links.classList.remove('open');
+  });
+});
+
+// Scroll reveal animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// FAQ toggle
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// Contact form
+const contactForm = document.getElementById('contactFormInner');
+const contactSubmit = document.getElementById('contactSubmitBtn');
+const formSuccess = document.getElementById('formSuccess');
+
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('cf_email').value.trim();
+    const message = document.getElementById('cf_message').value.trim();
+    if (!email || !message) return;
+
+    contactSubmit.disabled = true;
+    contactSubmit.textContent = 'Gönderiliyor...';
+
+    try {
+      const res = await fetch('https://formspree.io/f/mbdewbwy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, message, _subject: 'nexforgescripts.com - İletişim' })
+      });
+      if (res.ok) {
+        formSuccess.classList.add('active');
+        contactForm.reset();
+      } else {
+        alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+      }
+    } catch {
+      alert('Bağlantı hatası. Lütfen daha sonra tekrar deneyin.');
+    }
+    contactSubmit.disabled = false;
+    contactSubmit.textContent = 'Gönder →';
+  });
+}
+</script>
+
+</body>
+</html>
